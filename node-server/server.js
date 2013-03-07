@@ -2,11 +2,12 @@
 var sys = require( "util" ),
     http = require( "http" ),
     url = require('url'),
-    moment = require('moment');
+    moment = require('moment'),
+    config = require('./lib/config.js')();
 
 var couchdb = require('felix-couchdb'),
-    client = couchdb.createClient(5984, 'localhost', 'admin', 'hSI8vNjjv'),
-    db = client.db('velocitee-app');
+    client = couchdb.createClient(5984, 'localhost', config.dbParams.username, config.dbParams.password),
+    db = client.db(config.dbParams.dbName);
 
 
 // Create our HTTP server.
@@ -21,7 +22,7 @@ var server = http.createServer(
             queryObject.coords = JSON.parse(queryObject.coords);
             queryObject.user = JSON.parse(queryObject.user);
             queryObject.start = moment(queryObject.start);
-            queryObject.version = parseInt(queryObject.version, 10)
+            queryObject.version = parseInt(queryObject.version, 10);
 
             db.saveDoc(queryObject, function(err, ok)
             {
