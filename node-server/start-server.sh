@@ -1,0 +1,1 @@
+forever start -l /var/www/vhosts/velocitee.org/node-server/log/forever.log -o /var/www/vhosts/velocitee.org/node-server/log/out.log -e /var/www/vhosts/velocitee.org/node-server/log/err.log --append server.js
